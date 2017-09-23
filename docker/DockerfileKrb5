@@ -1,0 +1,51 @@
+# https://github.com/SvenDowideit/dockerfiles/blob/master/centos-kerberos/Dockerfile
+# to set up a kerberos server
+#  https://gist.github.com/ashrithr/4767927948eca70845db
+#  http://www.linuxproblems.org/wiki/Set_up_kerberos_on_Centos_6
+#  http://www.slashroot.in/how-install-and-configure-kerberos-server
+
+#
+#
+#   $ docker build -t centos7-kerberos  -f DockerfileKrb5 .
+#   Next, run the container, run t his command
+#   $ docker rm krb ; docker run -v /etc/localtime:/etc/localtime:ro -P -t -i --name krb -h kerberos.test.com centos7-kerberos bash
+#
+#  docker run -v /etc/localtime:/etc/localtime:ro -v /sys/fs/cgroup:/sys/fs/cgroup:ro -P -t -i --privileged --name krb -h kerberos.test.com centos7-kerberos bash -c "/usr/sbin/init"
+#  $ docker commit krb centos7-kerberos
+#
+# run the image by:
+#	docker run -P -t -i -name krb -h kerberos.test.com centos-kerberos bash
+
+FROM centos/systemd
+MAINTAINER Kong <kongyew>
+LABEL VERSION="0.1.1"
+RUN yum -y update && yum clean all
+RUN yum -y install deltarpm
+
+#EPEL
+RUN  yum -y install epel-release
+RUN	yum makecache
+
+#kerberos
+RUN	yum install -y -q krb5-libs krb5-server krb5-workstation
+
+USER root
+RUN echo 'changeme' |passwd root --stdin
+
+# NTP
+RUN yum -y install ntp
+#RUN ntpdate 0.rhel.pool.ntp.org
+#RUN systemctl start  ntpd.service
+#RUN systemctl enable ntpd.service
+
+EXPOSE	88
+EXPOSE	749
+
+ADD	krb5/krb5.conf /etc/krb5.conf
+RUN	echo "*/admin@test.com     *" > /var/kerberos/krb5kdc/kadm5.acl
+
+RUN	touch /etc/krb5.keytab ; chmod 640 /etc/krb5.keytab
+
+ADD	krb5/bashrc /.bashrc
+CMD ["/usr/sbin/ntpd", "-d", "-g"]
+CMD ["/usr/sbin/init"]

@@ -1,14 +1,12 @@
 
-##  How to connect to Greenplum and Spark via JDBC driver
-In this example, we will describe how to configure JDBC driver when you run Spark-shell.
+##  How to connect to Greenplum and Spark with PySpark
+In this example, we will describe how to use pySpark
 
 1. Connect to the Spark master docker image
 ```
 $ docker exec -it docker_master_1 /bin/bash
-
-
 ```
-2. Execute the command below to download jar into `~/.ivy2/jars` directory and type `:quit` to exit the Spark shell
+2. Execute the command below to run pySpark
 ```
 root@master:/usr/spark-2.1.0#GSC_JAR=$(ls /code/greenplum-spark_2.11-*.jar)
 root@master:/usr/spark-2.1.0#pyspark --jars "${GSC_JAR}"
@@ -108,6 +106,6 @@ $ docker exec -it docker_gpdb_1 /bin/bash
 [root@d632f535db87 data]# psql -h localhost -U gpadmin -d basic_db -c "select count(*) from basictable"
  count
 -------
-`18432`
+`36864`
 (1 row)
 ```

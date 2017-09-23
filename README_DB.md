@@ -4,21 +4,25 @@ This readme describes how to setup Greenplum that is running inside docker.
 ## Pre-requisites:
 - [docker-compose](http://docs.docker.com/compose)
 
-# Using docker-compose to initialize Greenplum cluster
-To create a standalone Greenplum cluster with the following command below. It builds a docker image with Pivotal Greenplum binaries and download some existing images such as Spark master and worker.
+# Verify the docker instance is running
+Make sure the docker instances are running by running `docker ps`
 ```
-    docker-compose up
-```
-The Greenplum DB cluster will be running at `greenplumsparkconnector_gpdb_1` with two segments. To access this docker instance, exec into a container:
-```
-  $ docker exec -it greenplumsparkconnector_gpdb_1 bin/bash
+  $ docker ps
+CONTAINER ID        IMAGE                                COMMAND                  CREATED             STATUS              PORTS                                                                                                                                                        NAMES
+95e091b03024        gettyimages/spark:2.1.1-hadoop-2.7   "bin/spark-class o..."   7 minutes ago       Up 7 minutes        7012-7016/tcp, 8881/tcp, 0.0.0.0:8081->8081/tcp                                                                                                              docker_worker_1
+150ab427ab05        docker_gpdb                          "/bin/sh -c 'echo ..."   7 minutes ago       Up 6 minutes        0.0.0.0:5005->5005/tcp, 0.0.0.0:5010->5010/tcp, 0.0.0.0:5432->5432/tcp, 0.0.0.0:9090->9090/tcp, 0.0.0.0:40000-40002->40000-40002/tcp, 0.0.0.0:9022->22/tcp   docker_gpdb_1
+a8bd0238cfab        gettyimages/spark:2.1.1-hadoop-2.7   "bin/spark-class o..."   7 minutes ago       Up 7 minutes        0.0.0.0:4040->4040/tcp, 0.0.0.0:6066->6066/tcp, 0.0.0.0:7077->7077/tcp, 0.0.0.0:8080->8080/tcp, 7001-7006/tcp                                                docker_master_1
 ```  
+
+
 
 ##  How to run the setupDB.sh
 1. Connect to the GPDB docker image
+The Greenplum DB cluster will be running at `docker_gpdb_1` with two segments. To access this docker instance, exec into a container:
 ```
- $ docker exec -it greenplumsparkconnector_gpdb_1 bin/bash
-```
+  $ docker exec -it docker_gpdb_1 bin/bash
+```  
+
 2. Execute the command below to access the scripts folder under "/code/data"
 ```
 [root@d632f535db87]# cd /code/data

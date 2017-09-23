@@ -6,7 +6,7 @@ if [ ! -e /var/kerberos/krb5kdc/principal ]; then
 	kadmin.local -r TEST.COM -q "addprinc kong"
 
 
-	echo test using: kinit sven
+	echo test using: kinit kong
 fi
 /etc/init.d/krb5kdc start
 /etc/init.d/kadmin start

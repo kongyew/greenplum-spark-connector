@@ -24,24 +24,38 @@ and Spark Streaming for stream processing.
 2. [Using docker-compose](#Using docker-compose)
 3. [Connect to Greenplum and Spark via Greenplum-Spark connector](#How to connect to Greenplum and Spark via Greenplum-Spark connector)
 4. [Read data from Greenplum into Spark](#Read data from Greenplum into Spark)
+5. [Write data from Spark DataFrame into Greenplum - with JDBC](# How to write data from Spark DataFrame into Greenplum)
+6. [Using pySpark](README_PySpark.md)
+
 
 ## Pre-requisites:
 - [docker-compose](http://docs.docker.com/compose)
 - [Greenplum-Spark connector](http://greenplum-spark.docs.pivotal.io/100/index.html)
+- [Postgres JDBC driver - if you want to write data from Spark into Greenplum ](https://jdbc.postgresql.org/download/postgresql-42.1.4.jar)
+
 
 # Using docker-compose
 To create a standalone Greenplum cluster with the following command in the github root directory.
 It builds a docker image with Pivotal Greenplum binaries and download some existing images such as Spark master and worker. Initially, it may take some time to download the docker image.
 ```
-    $ docker-compose up
+    $ runGPDBSpark2-1.sh
+    docker_master_1 is up-to-date
+    Creating docker_gpdb_1 ...
+    Creating docker_worker_1 ...
+    Creating docker_gpdb_1
+    Creating docker_gpdb_1 ... done
+
 ```
-The SparkUI will be running at `http://${YOUR_DOCKER_HOST}:8080` with one worker listed.
+The SparkUI will be running at `http://localhost:8080` with one worker listed.
 
 To access `Greenplum cluster`, exec into a container:
 ```
-    $ docker exec -it greenplumsparkconnector_master_1 bash
+    $ docker exec -it docker_gpdb_1 bash
     root@master:/usr/spark-2.1.0#
 ```
+## Setup Greenplum with sample tables
+Follow this [readme](README_DB.md)
+
 ##  Connect to Greenplum and Spark via Greenplum-Spark connector
 In this example, we will describe how to configure Greenplum-Spark connector when you run Spark-shell.
 
@@ -49,14 +63,16 @@ In this example, we will describe how to configure Greenplum-Spark connector whe
 
 2. Connect to the Spark master docker image
 ```
-$ docker exec -it greenplumsparkconnector_master_1 /bin/bash
-
-
+$ docker exec -it docker_master_1 /bin/bash
 ```
-3. Run the command to start a spark shell that loads Greenplum-Spark connector. This section assumes you have downloaded greenplum-spark_2.11.jar under this sample's root directory.  The root directory is mounted by the docker images under /code directory.
+3. Run the command to start a spark shell that loads Greenplum-Spark connector. This section assumes you have downloaded greenplum-spark_2.11.jar under the github repo with subfolder `scripts`.  The root directory is mounted by the docker images under /code directory.  You can also use scripts such as `scripts/download_postgresql.sh` to download binaries.
+
+Also, we included Postgresql (optional), in order to write data from Spark into Greenplum. Greenplum-Spark connector will support write features in future release and support parallel data transfer that performs significantly better than JDBC driver.
 ```
-root@master:/usr/spark-2.1.0#GSC_JAR=$(ls /code/greenplum-spark_2.11-*.jar)
-root@master:/usr/spark-2.1.0#spark-shell --jars "${GSC_JAR}"
+
+root@master:/usr/spark-2.1.0#GSC_JAR=$(ls /code/scripts/greenplum-spark_2.11-*.jar)
+root@master:/usr/spark-2.1.0#POSTGRES_JAR=$(ls /code/scripts/postgresql-*.jar)
+root@master:/usr/spark-2.1.0#spark-shell --jars "${GSC_JAR},${POSTGRES_JAR}" --driver-class-path ${POSTGRES_JAR}
 ...
 Welcome to
       ____              __
@@ -77,6 +93,14 @@ You can follow the example below to verify the Greenplum-Spark driver. The scala
 scala> Class.forName("io.pivotal.greenplum.spark.GreenplumRelationProvider")
 res0: Class[_] = class io.pivotal.greenplum.spark.GreenplumRelationProvider
 ```
+
+Verify JDBC driver is successfully loaded by Spark Shell
+You can follow the example below to verify the JDBC driver. The scala repl confirms the driver is accessible by returning `res1` result.
+```
+scala> Class.forName("org.postgresql.Driver")
+res1: Class[_] = class org.postgresql.Driver
+```
+
 ## Read data from Greenplum into Spark
 In this section, we will read data from Greenplum into Spark. It assumes the database and table are already created. See [how to setup GPDB DB with script](README_DB.md)
 
@@ -87,7 +111,7 @@ scala> :paste
 // that gives an one-partition Dataset
 val dataFrame = spark.read.format("io.pivotal.greenplum.spark.GreenplumRelationProvider")
 .option("dbtable", "basictable")
-.option("url", "jdbc:postgresql://greenplumsparkconnector_gpdb_1/basic_db")
+.option("url", "jdbc:postgresql://docker_gpdb_1/basic_db")
 .option("user", "gpadmin")
 .option("password", "pivotal")
 .option("driver", "org.postgresql.Driver")
@@ -161,10 +185,14 @@ scala> dataFrame.explain
 *Scan GreenplumRelation(StructType(StructField(id,IntegerType,false), StructField(value,StringType,true)),[Lio.pivotal.greenplum.spark.GreenplumPartition;@738ed8f5,io.pivotal.greenplum.spark.GreenplumOptions@1cfb7450) [id#0,value#1]
 ```
 
-3. You create a temporary table to cache the results from Greenplum
+3. You create a temporary table to cache the results from Greenplum and using option to speed your in-memory processing in Spark cluster.  [Global temporary view](https://spark.apache.org/docs/latest/sql-programming-guide.html) is tied to a system preserved database global_temp, and we must use the qualified name to refer it, e.g. SELECT * FROM global_temp.view1. Meanwhile, Temporary views in Spark SQL are session-scoped and will disappear if the session that creates it terminates.
 ```
-scala> dataFrame.createGlobalTempView("people")
+scala>
+// Register the DataFrame as a global temporary view
+dataFrame.createGlobalTempView("tempdataFrame")
 
+// Global temporary view is tied to a system preserved database `global_temp`
+spark.sql("SELECT * FROM global_temp.tempdataFrame").show()
 ```
 
 
@@ -172,16 +200,13 @@ scala> dataFrame.createGlobalTempView("people")
 In this section, you can write data from Spark DataFrame into Greenplum table. by using JDBC driver. Please note: Greenplum - Spark connector does NOT yet support data transfer from Spark into Greenplum.
 
 Pre-requisites:
-1. Run the script under scripts/download_postgresql.sh
+1. Run the script under scripts/download_postgresql.sh to download postgresql-42.1.4.jar
 
-2.
-
- the --jars option expects a comma-separated list of local jars to include on the driver and executor classpaths.
-
-
+2. Make sure your spark shell is loaded the Postgresql jar.
 ```
-root@master:/usr/spark-2.1.0#POSTGRES_JAR=$(ls /code/postgresql-42.*.jar)
-root@master:/usr/spark-2.1.0#spark-shell --jars "${GSC_JAR},${POSTGRES_JAR}"
+root@master:/usr/spark-2.1.0#GSC_JAR=$(ls /code/scripts/greenplum-spark_2.11-*.jar)
+root@master:/usr/spark-2.1.0#POSTGRES_JAR=$(ls /code/scripts/postgresql-*.jar)
+root@master:/usr/spark-2.1.0#spark-shell --jars "${GSC_JAR},${POSTGRES_JAR}" --driver-class-path ${POSTGRES_JAR}
 ...
 Welcome to
       ____              __
@@ -196,24 +221,23 @@ Type :help for more information.
 scala>
 ```
 
-POSTGRES_JAR=$(ls /code/postgresql-42.*.jar)
 
-1. Determine the number of records in the "basictable" table by using psql command.  
+3. Determine the number of records in the "basictable" table by using psql command.  
 ```
-$ docker exec -it greenplumsparkconnector_gpdb_1 /bin/bash
-[root@d632f535db87 data]# psql -h localhost -U gpadmin -d basic_db -c "select count(*) from basictable" -w pivotal
-psql: warning: extra command-line argument "pivotal" ignored
+$ docker exec -it docker_gpdb_1 /bin/bash
+[root@d632f535db87 data]# psql -h localhost -U gpadmin -d basic_db -c "select count(*) from basictable"
+
  count
 -------
 18432
 (1 row)
 ```
-2. Configure JDBC URL and connection Properties and use DataFrame write operation to write data from Spark into Greenplum.
+2. Configure JDBC URL and connection Properties and use DataFrame write operation to write data from Spark into Greenplum. You can use different write mode
 ```
 scala> :paste
 // Entering paste mode (ctrl-D to finish)
 
-val jdbcUrl = s"jdbc:postgresql://greenplumsparkconnector_gpdb_1/basic_db?user=gpadmin&password=pivotal"
+val jdbcUrl = s"jdbc:postgresql://docker_gpdb_1/basic_db?user=gpadmin&password=pivotal"
 val connectionProperties = new java.util.Properties()
 dataFrame.write.mode("Append") .jdbc( url = jdbcUrl, table = "basictable", connectionProperties = connectionProperties)
 
@@ -222,7 +246,7 @@ dataFrame.write.mode("Append") .jdbc( url = jdbcUrl, table = "basictable", conne
 ```
 3. Verify the write operation is successful by exec into GPDB container and run psql command-line. The total number records in the Greenplum table must be 2x of the original data.
 ```
-$ docker exec -it greenplumsparkconnector_gpdb_1 /bin/bash
+$ docker exec -it docker_gpdb_1 /bin/bash
 [root@d632f535db87 data]# psql -h localhost -U gpadmin -d basic_db -c "select count(*) from basictable" -w pivotal
 psql: warning: extra command-line argument "pivotal" ignored
  count
@@ -238,8 +262,7 @@ scala>dataFrame.write.mode("Append") .jdbc( url = jdbcUrl, table = "NEWTable", c
 
 5. Run psql commands to verify the new table with new records.
 ```
-[root@d632f535db87 scripts]# psql -h localhost -U gpadmin -d basic_db -c "\dt" -
-psql: warning: extra command-line argument "pivotal" ignored
+[root@d632f535db87 scripts]# psql -h localhost -U gpadmin -d basic_db -c "\dt"
 List of relations
 Schema |            Name             | Type  |  Owner
 --------+-----------------------------+-------+---------

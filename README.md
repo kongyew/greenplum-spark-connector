@@ -59,7 +59,7 @@ Follow this [readme](README_DB.md)
 ##  Connect to Greenplum and Spark via Greenplum-Spark connector
 In this example, we will describe how to configure Greenplum-Spark connector when you run Spark-shell.
 
-1. Make sure you download greenplum-spark_2.11.jar from Pivotal Network. And copy the jar into this sample's root directory.
+1. Make sure you download greenplum-spark_2.11.jar from Pivotal Network. 
 
 2. Connect to the Spark master docker image
 ```

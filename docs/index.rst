@@ -11,11 +11,11 @@ Welcome to Greenplum-Spark Connector Examples's documentation!
    :titlesonly:
 
 	Prerequisites <prerequisites>
-	Setup Greenplum and Spark environment <setup-greenplum-spark.rst>
+	Setup GPDB and Spark <setup-greenplum-spark.rst>
 	Create database and table <create-database-table.rst>
-	Reading data from GPDB into Spark <Read-data-from-Greenplum-into-Spark.rst>
-	Writing data from Spark into GPDB <Write-data-from-Spark-into-Greenplum.rst>
-	all-about-me <all-about-me>
+	Reading data from GPDB<Read-data-from-Greenplum-into-Spark.rst>
+	Writing data into GPDB <Write-data-from-Spark-into-Greenplum.rst>
+	About <all-about-me>
 
 Indices and tables
 ==================

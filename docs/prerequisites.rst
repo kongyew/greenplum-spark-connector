@@ -5,19 +5,19 @@ Prerequisites
 What you need to know 
 =====================
 
-The tutorial assumes some basic familiarity with the commandline prompt in a
+The tutorial assumes some basic familiarity with commandline prompt in a
 terminal.
 
-You'll need to know basic knowledge about Greenplum and Spark.
+You'll need to know basic knowledge about Greenplum and `Spark <https://spark.apache.org/docs/latest/sql-programming-guide.html>`_.
 
 Software 
 ========
 
-The tutorial assumes that you're using a Unix-like system and docker
+The tutorial assumes that you're using a Unix-like system and docker.
 
 If your system already has Docker and Docker-compose running that you've
 installed, you probably already have what you need and know what you need to
-know. All the same:
+know. 
 
 Docker-Compose
 --------------
@@ -28,4 +28,4 @@ machine.  1.14.0 or newer should be fine.
 Greenplum-Spark connector
 -------------------------
 
-Please download the Greenplum-Spark connector jar from Pivotal Network        
+Please download the Greenplum-Spark connector jar from `Pivotal Network <https://network.pivotal.io/api/v2/products/pivotal-gpdb/releases/7106/product_files/30352/download/>`_.

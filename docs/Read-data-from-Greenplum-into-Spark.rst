@@ -2,9 +2,7 @@
  Reading data from Greenplum into Spark
 #########################################
 
-
-
-In this example, we will describe how to configure Greenplum-Spark connector when you run Spark-shell. Later, we will read data from Greenplum into Spark. It assumes the database and table are already created.
+In this example, we will describe how to configure Greenplum-Spark connector when you run Spark-shell. It assumes the database and table are already created.
 
 1. Make sure you download greenplum-spark_2.11.jar from `Pivotal Network <https://network.pivotal.io/api/v2/products/pivotal-gpdb/releases/7106/product_files/30352/download/>`_. 
 
@@ -14,11 +12,12 @@ In this example, we will describe how to configure Greenplum-Spark connector whe
 
 	$ docker exec -it docker_master_1 /bin/bash
 
-3. Run the command to start a spark shell that loads Greenplum-Spark connector. This section assumes you have downloaded greenplum-spark_2.11.jar under the github repo with subfolder `scripts`.  The root directory is mounted by the docker images under /code directory.  You can also use scripts such as `scripts/download_postgresql.sh` to download binaries.
+3. Run the command to start a spark shell that loads Greenplum-Spark connector. This section assumes you have downloaded greenplum-spark_2.11.jar under the github repo with subfolder `scripts`.  The root directory is mounted by the docker images under /code directory.  You can also use scripts such as `scripts/download_postgresql.sh` and `scripts/download_greenplum-spark-connector.sh` to download required binaries.
 
-Also, we included Postgresql (optional), in order to write data from Spark into Greenplum. Greenplum-Spark connector will support write features in future release and support parallel data transfer that performs significantly better than JDBC driver.
+Also, we included Postgresql, in order to write data from Spark into Greenplum. Greenplum-Spark connector will support write features in future release and support parallel data transfer that performs significantly better than JDBC driver.
 
-.. code-block:: java
+
+.. code-block::java
    :emphasize-lines: 1-3
 
 	root@master:/usr/spark-2.1.0#GSC_JAR=$(ls /code/scripts/greenplum-spark_2.11-*.jar)
@@ -34,12 +33,12 @@ Also, we included Postgresql (optional), in order to write data from Spark into 
 4. Verify Greenplum-Spark driver is successfully loaded by Spark Shell.
 You can follow the example below to verify the Greenplum-Spark driver. The scala repl confirms the driver is accessible by returning `res0` result.
 
-.. code-block:: java
+.. code-block::java
 
 	scala> Class.forName("io.pivotal.greenplum.spark.GreenplumRelationProvider")
 	res0: Class[_] = class io.pivotal.greenplum.spark.GreenplumRelationProvider
 
-Verify JDBC driver is successfully loaded by Spark Shell
+Verify JDBC driver is successfully loaded by Spark Shell.
 You can follow the example below to verify the JDBC driver. The scala repl confirms the driver is accessible by returning `res1` result.
 
 
@@ -47,8 +46,6 @@ You can follow the example below to verify the JDBC driver. The scala repl confi
 
 	scala> Class.forName("org.postgresql.Driver")
 	res1: Class[_] = class org.postgresql.Driver
-
-
 
 
 5. By default, you can run the command below to retrieve data from Greenplum with a single data partition in Spark cluster. In order to paste the command, you need to type `:paste` in the scala environment and paste the code below, followed by `Ctrl-D`.
@@ -130,14 +127,14 @@ You can follow the example below to verify the JDBC driver. The scala repl confi
 	+---+--------+
 	only showing top 20 rows
 
-.. code-block:: java
+.. code-block::java
 
 	scala> dataFrame.explain
 	\\== Physical Plan \\==
 	*Scan GreenplumRelation(StructType(StructField(id,IntegerType,false), StructField(value,StringType,true)),[Lio.pivotal.greenplum.spark.GreenplumPartition;@738ed8f5,io.pivotal.greenplum.spark.GreenplumOptions@1cfb7450) [id#0,value#1]
 
 
-3. You create a temporary table to cache the results from Greenplum and using option to speed your in-memory processing in Spark cluster.  [Global temporary view](https://spark.apache.org/docs/latest/sql-programming-guide.html) is tied to a system preserved database global_temp, and we must use the qualified name to refer it, e.g. SELECT * FROM global_temp.view1. Meanwhile, Temporary views in Spark SQL are session-scoped and will disappear if the session that creates it terminates.
+3. You create a temporary table to cache the results from Greenplum and using option to speed your in-memory processing in Spark cluster.   `Global temporary view <https://spark.apache.org/docs/latest/sql-programming-guide.html>`_. is tied to a system preserved database global_temp, and we must use the qualified name to refer it, e.g. SELECT * FROM global_temp.view1. Meanwhile, Temporary views in Spark SQL are session-scoped and will disappear if the session that creates it terminates.
 
 .. code-block:: java
 

@@ -1,4 +1,5 @@
 #!/bin/bash
+# Change PIVNET token
 set -e
 set -u
 set -x

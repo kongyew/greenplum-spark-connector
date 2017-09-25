@@ -16,6 +16,7 @@ Welcome to Greenplum-Spark Connector Examples's documentation!
 	Create database and table <create-database-table.rst>
 	Reading data from GPDB<Read-data-from-Greenplum-into-Spark.rst>
 	Writing data into GPDB <Write-data-from-Spark-into-Greenplum.rst>
+	Example - PySpark <using-pyspark.rst>
 	About <all-about-me>
 
 Indices and tables

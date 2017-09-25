@@ -8,7 +8,11 @@ What you need to know
 The tutorial assumes some basic familiarity with commandline prompt in a
 terminal.
 
-You'll need to know basic knowledge about Greenplum and `Spark <https://spark.apache.org/docs/latest/sql-programming-guide.html>`_.
+You'll need to know basic knowledge about `Pivotal Greenplum <https://pivotal.io/pivotal-greenplum>`_. and `Apache Spark <https://spark.apache.org/docs/latest/sql-programming-guide.html>`_.
+
+Git repository : `'https://github.com/kongyew/greenplum-spark-connector' <https://github.com/kongyew/greenplum-spark-connector/>`_.
+
+Greenplum-Spark connector documentation: <http://greenplum-spark.docs.pivotal.io>
 
 Software 
 ========

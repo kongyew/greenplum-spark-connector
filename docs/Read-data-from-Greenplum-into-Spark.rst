@@ -17,7 +17,7 @@ In this example, we will describe how to configure Greenplum-Spark connector whe
 Also, we included Postgresql, in order to write data from Spark into Greenplum. Greenplum-Spark connector will support write features in future release and support parallel data transfer that performs significantly better than JDBC driver.
 
 
-.. code-block::java
+.. code-block:: java
    :emphasize-lines: 1-3
 
 	root@master:/usr/spark-2.1.0#GSC_JAR=$(ls /code/scripts/greenplum-spark_2.11-*.jar)
@@ -33,7 +33,7 @@ Also, we included Postgresql, in order to write data from Spark into Greenplum. 
 4. Verify Greenplum-Spark driver is successfully loaded by Spark Shell.
 You can follow the example below to verify the Greenplum-Spark driver. The scala repl confirms the driver is accessible by returning `res0` result.
 
-.. code-block::java
+.. code-block:: java
 
 	scala> Class.forName("io.pivotal.greenplum.spark.GreenplumRelationProvider")
 	res0: Class[_] = class io.pivotal.greenplum.spark.GreenplumRelationProvider

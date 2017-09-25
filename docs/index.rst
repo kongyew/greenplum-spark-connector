@@ -10,6 +10,7 @@ Welcome to Greenplum-Spark Connector Examples's documentation!
    :maxdepth: 2
    :titlesonly:
 
+	Overview <overview>
 	Prerequisites <prerequisites>
 	Setup GPDB and Spark <setup-greenplum-spark.rst>
 	Create database and table <create-database-table.rst>

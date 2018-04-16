@@ -40,17 +40,17 @@ It builds a docker image with Pivotal Greenplum binaries and download some exist
 ```
     $ runGPDBSpark2-1.sh
     docker_master_1 is up-to-date
-    Creating docker_gpdb_1 ...
+    Creating gpdbsne ...
     Creating docker_worker_1 ...
-    Creating docker_gpdb_1
-    Creating docker_gpdb_1 ... done
+    Creating gpdbsne
+    Creating gpdbsne ... done
 
 ```
 The SparkUI will be running at `http://localhost:8080` with one worker listed.
 
 To access `Greenplum cluster`, exec into a container:
 ```
-    $ docker exec -it docker_gpdb_1 bash
+    $ docker exec -it gpdbsne bin/bash
     root@master:/usr/spark-2.1.0#
 ```
 ## Setup Greenplum with sample tables
@@ -59,13 +59,13 @@ Follow this [readme](README_DB.md)
 ##  Connect to Greenplum and Spark via Greenplum-Spark connector
 In this example, we will describe how to configure Greenplum-Spark connector when you run Spark-shell.
 
-1. Make sure you download greenplum-spark_2.11.jar from Pivotal Network. 
+1. Make sure you download greenplum-spark_2.11-1.3.0.jar or latest jar from Pivotal Network.
 
 2. Connect to the Spark master docker image
 ```
-$ docker exec -it docker_master_1 /bin/bash
+$ docker exec -it gpdbsne bin/bash /bin/bash
 ```
-3. Run the command to start a spark shell that loads Greenplum-Spark connector. This section assumes you have downloaded greenplum-spark_2.11.jar under the github repo with subfolder `scripts`.  The root directory is mounted by the docker images under /code directory.  You can also use scripts such as `scripts/download_postgresql.sh` to download binaries.
+3. Run the command to start a spark shell that loads Greenplum-Spark connector. This section assumes you have downloaded latest greenplum-spark.jar under the github repo with subfolder `scripts`.  The root directory is mounted by the docker images under /code directory.  You can also use scripts such as `scripts/download_postgresql.sh` to download binaries.
 
 Also, we included Postgresql (optional), in order to write data from Spark into Greenplum. Greenplum-Spark connector will support write features in future release and support parallel data transfer that performs significantly better than JDBC driver.
 ```

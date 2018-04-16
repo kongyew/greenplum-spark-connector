@@ -32,8 +32,8 @@ services:
     hostname: worker
     environment:
       SPARK_CONF_DIR: /conf
-      SPARK_WORKER_CORES: 4
-      SPARK_WORKER_MEMORY: 4g
+      SPARK_WORKER_CORES: 2
+      SPARK_WORKER_MEMORY: 1g
       SPARK_WORKER_PORT: 8881
       SPARK_WORKER_WEBUI_PORT: 8081
       SPARK_PUBLIC_DNS: localhost
@@ -52,9 +52,11 @@ services:
       - ./conf/worker:/conf
       - ./data:/tmp/data
   gpdb:
-      image: "kochanpivotal/gpdb5oss"
-      hostname: "gpdbsne"
-      container_name: gpdbsne
+      build:
+        context: .
+        dockerfile: Dockerfile
+      #image: "pivotaldata/gpdb-base"
+      #hostname: gpdb
       ports:
        - "9090:9090"
        - "5432:5432"

@@ -55,6 +55,7 @@ services:
       image: "kochanpivotal/gpdb5oss"
       hostname: "gpdbsne"
       container_name: gpdbsne
+      command: bin/bash 
       ports:
        - "9090:9090"
        - "5432:5432"

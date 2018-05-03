@@ -27,7 +27,7 @@ services:
       - ./data:/tmp/data
       - ..:/code
   worker:
-    image: gettyimages/spark:2.2.0-hadoop-2.7
+    image: gettyimages/spark:2.3.0-hadoop-2.8
     command: bin/spark-class org.apache.spark.deploy.worker.Worker spark://master:7077
     hostname: worker
     environment:

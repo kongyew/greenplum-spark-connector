@@ -36,7 +36,6 @@ How to read data from Greenplum into Spark
 
 	>>>source_df = sqlContext.read.format('io.pivotal.greenplum.spark.GreenplumRelationProvider').options(
 	          url='jdbc:postgresql://docker_gpdb_1/basic_db',
-	          driver='com.mysql.jdbc.Driver',
 	          dbtable='basictable',
 	          user='gpadmin',
 	          password='pivotal',

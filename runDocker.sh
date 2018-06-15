@@ -17,11 +17,11 @@ function RunUseCase3()
     exit -1;
   else
     if [[ "${COMMAND}" == "up" ]]; then
-        $DC_USE_CASE2_SCRIPT up
+        $DC_USE_CASE3_SCRIPT up
     elif [[ "${COMMAND}" == "down" ]]; then
-         $DC_USE_CASE2_SCRIPT down
+         $DC_USE_CASE3_SCRIPT down
     else # default option
-        $DC_USE_CASE2_SCRIPT up
+        $DC_USE_CASE3_SCRIPT up
     fi
   fi
 }
@@ -113,6 +113,8 @@ else
       RunUseCase1  "${COMMAND}"
   elif [[ "${TYPE}" == "usecase2" ]]; then
       RunUseCase2  "${COMMAND}"
+  elif [[ "${TYPE}" == "usecase3" ]]; then
+        RunUseCase3  "${COMMAND}"
   else # default option
        echo "Please provide a valid option"
   fi

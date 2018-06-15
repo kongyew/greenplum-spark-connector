@@ -5,6 +5,9 @@ services:
     ports:
       - "8888:8888"
       - "4040-4080:4040-4080"
+    environment:
+      GRANT_SUDO: "yes"
+      SPARK_OPTS: " --spark.executor.memory=8g"
     volumes:
       - ..:/code
       - ./notebooks:/home/jovyan/work

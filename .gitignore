@@ -2,3 +2,5 @@
 *.log
 *.DS_Store
 *.jar
+${SSH_ENV}
+${SSH_ENV}.bak

@@ -4,3 +4,5 @@
 *.jar
 ${SSH_ENV}
 ${SSH_ENV}.bak
+data/faa/gpdb-sandbox-tutorials
+data/*

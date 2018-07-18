@@ -4,7 +4,7 @@ In this example, we will describe how to use pySpark
 
 1. Connect to the Spark master docker image
 ```
-$ docker exec -it docker_master_1 /bin/bash
+$ docker exec -it usecase1_master_1 /bin/bash
 ```
 2. Execute the command below to run pySpark
 ```
@@ -26,19 +26,22 @@ Welcome to
 Using Python version 3.4.2 (default, Oct  8 2014 10:45:20)
 SparkSession available as 'spark'.
 ```
-
-3. To load a DataFrame from a Greenplum table in PySpark
+3. Verfiy the Greenplum-Spark connector is loaded by pySpark
+Use the command `sc.getConf().getAll()` to verify spark.repl.local.jars is referring to Greenplum-Spark connector jar.
 
 ```
->>>source_df = sqlContext.read.format('io.pivotal.greenplum.spark.GreenplumRelationProvider').options(
-          url='jdbc:postgresql://docker_gpdb_1/basic_db',
-          driver='com.mysql.jdbc.Driver',
-          dbtable='basictable',
-          user='gpadmin',
-          password='pivotal',
-          driver='org.postgresql.Driver',
-          partitionColumn='id').load()
+>>> sc.getConf().getAll()
+[('spark.app.id', 'app-20180718183929-0000'), ('spark.jars', 'file:///code/usecase1/data/greenplum-spark_2.11-1.4.0.jar'), ('spark.master', 'spark://master:7077'), ('spark.rdd.compress', 'True'), ('spark.driver.host', 'master'), ('spark.serializer.objectStreamReset', '100'), ('spark.repl.local.jars', 'file:///code/usecase1/data/greenplum-spark_2.11-1.4.0.jar'), ('spark.driver.port', '38611'), ('spark.executor.id', 'driver'), ('spark.submit.deployMode', 'client'), ('spark.app.name', 'PySparkShell'), ('spark.ui.showConsoleProgress', 'true')]
+```
+4. To load a DataFrame from a Greenplum table in PySpark
 
+```
+>>>source_df = sqlContext.read.format('greenplum').options(url='jdbc:postgresql://gpdbsne/basic_db', \
+         dbtable='basictable', \
+         user='gpadmin', \
+         password='pivotal', \
+         driver='org.postgresql.Driver', \
+         partitionColumn='id').load()
 
 ```
 4. Verify source dataframe by running these commands

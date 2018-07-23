@@ -44,7 +44,7 @@ Use the command `sc.getConf().getAll()` to verify spark.repl.local.jars is refer
          partitionColumn='id').load()
 
 ```
-4. Verify source dataframe by running these commands
+5. Verify source dataframe by running these commands
 ```
 >>> source_df.count()
 18432

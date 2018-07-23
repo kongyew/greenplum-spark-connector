@@ -58,6 +58,8 @@ services:
       hostname: "gpdbsne"
       container_name: gpdbsne
       command: bin/bash
+      environment:
+        - START_GPDB=yes
       ports:
        - "9090:9090"
        - "5432:5432"

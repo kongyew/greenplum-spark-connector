@@ -54,16 +54,16 @@ To access `Greenplum cluster`, exec into a container:
     root@master:/usr/spark-2.1.0#
 ```
 ## Setup Greenplum with sample tables
-Follow this [readme](README_DB.md)
+Follow this [readme](usecase1/ README_DB.md)
 
 ##  Connect to Greenplum and Spark via Greenplum-Spark connector
 In this example, we will describe how to configure Greenplum-Spark connector when you run Spark-shell.
 
-1. Make sure you download greenplum-spark_2.11-1.3.0.jar or latest jar from Pivotal Network.
+1. Make sure you download greenplum-spark_2.11-1.5.0.jar or latest jar from Pivotal Network.
 
 2. Connect to the Spark master docker image
 ```
-$ docker exec -it docker_master_1 bash
+$ docker exec -it usecase1_master_1 bash
 ```
 3. Run the command to start a spark shell that loads Greenplum-Spark connector. This section assumes you have downloaded latest greenplum-spark.jar under the github repo with subfolder `scripts`.  The root directory is mounted by the docker images under /code directory.  You can also use scripts such as `scripts/download_postgresql.sh` to download binaries.
 
@@ -111,11 +111,11 @@ scala> :paste
 // that gives an one-partition Dataset
 
 val dataFrame = spark.read.format("greenplum")
-.option("dbtable", "basictable")
 .option("url", "jdbc:postgresql://gpdbsne/basic_db")
 .option("user", "gpadmin")
 .option("password", "pivotal")
-.option("driver", "org.postgresql.Driver")
+.option("dbschema", "public")
+.option("dbtable", "basictable")
 .option("partitionColumn", "id")
 .load()
 

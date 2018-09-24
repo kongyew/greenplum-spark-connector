@@ -201,7 +201,7 @@ spark.sql("SELECT * FROM global_temp.tempdataFrame").show()
 In this section, you can write data from Spark DataFrame into Greenplum table. by using JDBC driver. Please note: Greenplum - Spark connector does NOT yet support data transfer from Spark into Greenplum.
 
 Pre-requisites:
-1. Run the script under scripts/download_postgresql.sh to download postgresql-42.2.2.jar
+1. Run the script under scripts/download_postgresql.sh to download postgresql-42.2.5.jar
 
 2. Make sure your spark shell is loaded the Postgresql jar.
 ```

@@ -1,6 +1,7 @@
 version: "3"
 services:
   spark:
+    container_name: jupyter
     image: jupyter/all-spark-notebook
     ports:
       - "8888:8888"
@@ -12,11 +13,22 @@ services:
       - ..:/code
       - ./notebooks:/home/jovyan/work
       - ./ivy2:/home/jovyan/.ivy2
-  gpdb:
+    tty: true
+    privileged: true
+    links:
+         - gpdb5:gpdbsne
+    networks:
+      mynetwork:
+        aliases:
+          - jupyter
+          - jupyter.localdomain.com
+  gpdb5:
       image: "kochanpivotal/gpdb5oss"
       hostname: "gpdbsne"
       container_name: gpdbsne
       command: bin/bash
+      environment:
+        - START_GPDB=yes
       ports:
        - "9090:9090"
        - "5432:5432"
@@ -31,3 +43,12 @@ services:
       volumes:
        - ..:/code
       tty: true
+      privileged: true
+      networks:
+        mynetwork:
+          aliases:
+            - gpdbsne
+            - gpdbsne.localdomain.com
+networks:
+    mynetwork:
+      driver: bridge

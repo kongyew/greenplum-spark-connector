@@ -4,7 +4,7 @@ The Pivotal Greenplum Database (GPDB) is an advanced, fully featured, open sourc
 <https://pivotal.io/pivotal-greenplum>
 
 # Pivotal Greenplum-Spark Connector
-The [Pivotal Greenplum-Spark Connector](http://greenplum-spark.docs.pivotal.io/100/index.html) provides high speed, parallel data transfer between Greenplum Database and Apache Spark clusters to support:
+The [Pivotal Greenplum-Spark Connector](http://greenplum-spark.docs.pivotal.io/) provides high speed, parallel data transfer between Greenplum Database and Apache Spark clusters to support:
 
 - Interactive data analysis
 - In-memory analytics processing
@@ -22,16 +22,16 @@ and Spark Streaming for stream processing.
 # Table of Contents
 1. [Pre-requisites](#Pre-requisites)
 2. [Using docker-compose](#Using-docker-compose)
-3. [Connect to Greenplum and Spark via Greenplum-Spark connector](#How-to-connect-to Greenplum-and-Spark-via-Greenplum-Spark connector)
+3. [Connect to Greenplum and Spark via Greenplum-Spark connector](#How-to-connect-to-Greenplum-and-Spark-via-Greenplum-Spark-connector)
 4. [Read data from Greenplum into Spark](#Read-data-from-Greenplum-into-Spark)
-5. [Write data from Spark DataFrame into Greenplum - with JDBC](#How-to-write-data-from-Spark DataFrame-into-Greenplum)
+5. [Write data from Spark DataFrame into Greenplum - with JDBC](#How-to-write-data-from-Spark-DataFrame-into-Greenplum)
 6. [Using pySpark](README_PySpark.md)
 
 
 ## Pre-requisites:
 - [docker-compose](http://docs.docker.com/compose)
 - [Greenplum-Spark connector](http://greenplum-spark.docs.pivotal.io/100/index.html)
-- [Postgres JDBC driver - if you want to write data from Spark into Greenplum ](https://jdbc.postgresql.org/download/postgresql-42.2.2.jar)
+- [Postgres JDBC driver - if you want to write data from Spark into Greenplum ](https://jdbc.postgresql.org/download/postgresql-42.2.5.jar)
 
 # Using docker-compose:
 To create a standalone Greenplum cluster with the following command in the github root directory.
@@ -283,6 +283,8 @@ psql: warning: extra command-line argument "pivotal" ignored
 
 ## Conclusions
 Greenplum-Spark connector uses Greenplum gpfdist protocol to parallelize data transfer between Greenplum and Spark clusters. Therefore, this connector provides better read throughput, compared to typical JDBC driver.
+
+For more details, see this [link](http://greenplum-spark.docs.pivotal.io)
 
 ## License
 MIT

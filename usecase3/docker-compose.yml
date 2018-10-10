@@ -1,0 +1,33 @@
+version: "3"
+services:
+  spark:
+    image: jupyter/all-spark-notebook
+    ports:
+      - "8888:8888"
+      - "4040-4080:4040-4080"
+    environment:
+      GRANT_SUDO: "yes"
+      SPARK_OPTS: " --spark.executor.memory=8g"
+    volumes:
+      - ..:/code
+      - ./notebooks:/home/jovyan/work
+      - ./ivy2:/home/jovyan/.ivy2
+  gpdb:
+      image: "kochanpivotal/gpdb5oss"
+      hostname: "gpdbsne"
+      container_name: gpdbsne
+      command: bin/bash
+      ports:
+       - "9090:9090"
+       - "5432:5432"
+       - "5005:5005"
+       - "5010:5010"
+       - "9022:22"
+       - "40000:40000"
+       - "40001:40001"
+       - "40002:40002"
+      expose:
+       - "5432"
+      volumes:
+       - ..:/code
+      tty: true

@@ -1,3 +1,5 @@
+[![GitPitch](https://gitpitch.com/assets/badge.svg)](https://gitpitch.com/kongyew/greenplum-spark-connector)
+
 # Getting started with Greenplum and Apache Spark in minutes
 This page provides how to get started with Greenplum and Apache Spark. You can use these examples to perform these usecases.
 

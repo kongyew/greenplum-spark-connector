@@ -1,5 +1,10 @@
-# Getting started with Greenplum and Apache Spark
+# Getting started with Greenplum and Apache Spark in minutes
 This page provides how to get started with Greenplum and Apache Spark. You can use these examples to perform these usecases.
+
+# Greenplum - Spark Architecture:
+
+
+# Use Cases:
 
 1. [Read data from Greenplum table into Spark DataFrame](usecase1/README.MD)
 2. [Write data from Spark DataFrame into Greenplum table](usecase1/README.MD)

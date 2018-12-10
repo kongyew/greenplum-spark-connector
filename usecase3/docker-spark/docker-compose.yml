@@ -1,9 +1,10 @@
 version: "3"
 services:
   master:
-    #image: gettyimages/spark:2.2.1-hadoop-2.7
-    image: gettyimages/spark:2.1.1-hadoop-2.7
-    #image: gettyimages/spark:2.3.0-hadoop-2.8
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: sparkimage
     command: bin/spark-class org.apache.spark.deploy.master.Master -h master
     hostname: master
     environment:
@@ -16,7 +17,6 @@ services:
       - 7003
       - 7004
       - 7005
-      - 7006
       - 7077
       - 6066
     ports:
@@ -27,11 +27,12 @@ services:
     volumes:
       - ./conf/master:/conf
       - ./data:/tmp/data
-      - ..:/code
+
   worker:
-    #image: gettyimages/spark:2.2.1-hadoop-2.7
-    image: gettyimages/spark:2.1.1-hadoop-2.7
-    #image: gettyimages/spark:2.3.0-hadoop-2.8
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: sparkimage
     command: bin/spark-class org.apache.spark.deploy.worker.Worker spark://master:7077
     hostname: worker
     environment:
@@ -48,33 +49,9 @@ services:
       - 7013
       - 7014
       - 7015
-      - 7016
       - 8881
     ports:
       - 8081:8081
     volumes:
       - ./conf/worker:/conf
       - ./data:/tmp/data
-  gpdb:
-      image: "kochanpivotal/gpdb5oss"
-      hostname: "gpdbsne"
-      container_name: gpdbsne
-      command: bin/bash
-      environment:
-        - START_GPDB=yes
-      ports:
-       - "9090:9090"
-       - "5432:5432"
-       - "5005:5005"
-       - "5010:5010"
-       - "9022:22"
-       - "40000:40000"
-       - "40001:40001"
-       - "40002:40002"
-      expose:
-       - "5432"
-      volumes:
-       - ..:/code
-      links:
-       - master
-      tty: true

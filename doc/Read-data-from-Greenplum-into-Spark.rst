@@ -4,7 +4,7 @@
 
 In this example, we will describe how to configure Greenplum-Spark connector when you run Spark-shell. It assumes the database and table are already created.
 
-1. Make sure you download greenplum-spark_2.11.jar from `Pivotal Network <https://network.pivotal.io/api/v2/products/pivotal-gpdb/releases/7106/product_files/30352/download/>`_. 
+1. Make sure you download greenplum-spark_2.11-x.x.jar from `Pivotal Network <https://network.pivotal.io/api/v2/products/pivotal-gpdb/releases/7106/product_files/30352/download/>`_. 
 
 2. Connect to the Spark master instance.
 

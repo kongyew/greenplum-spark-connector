@@ -20,13 +20,7 @@ You can run spark and GPDB instances by using existing scripts.
 
 .. code-block:: bash
 
-	  $./runDocker.sh -t usecase1 -c up
-Creating network "docker_default" with the default driver
-Creating docker_master_1 ... done
-Creating docker_worker_1 ... done
-Creating gpdbsne         ... done
-Attaching to docker_master_1, docker_worker_1, gpdbsne
-...
+	  $./runGPDBSpark2-1.sh
 
 Verify the docker instance is running:
 =======================================
@@ -45,12 +39,12 @@ How to run the setupDB:
 This setupDB.sh script automatically creates default database and table(s). The script is located under `<src>/data/scripts/setupDB.sh`.
 
 1. Connect to the GPDB docker image
-The Greenplum DB cluster will be running with this instance name: `docker_gpdb_1` with two segments. To access this docker instance, exec into a container:
+The Greenplum DB cluster will be running with this instance name: `gpdbsne` with two segments. To access this docker instance, exec into a container:
 
 .. code-block:: bash
 
-	$ docker exec -it docker_gpdb_1 bin/bash
-
+	$ docker exec -it gpdbsne bin/bash
+ 
 
 2. Execute the command below to access the scripts folder under "/code/data"
 
@@ -91,7 +85,7 @@ The Greenplum DB cluster will be running with this instance name: `docker_gpdb_1
 
 .. code-block:: bash
 
-	[root@d632f535db87 data]# psql -h localhost -U gpadmin -d basic_db -c "\dt"
+	[root@d632f535db87 data]# psql -h localhost -U gpadmin -d basic_db -c "\dt" 
 	           List of relations
 	 Schema |    Name    | Type  |  Owner
 	--------+------------+-------+---------
@@ -100,7 +94,7 @@ The Greenplum DB cluster will be running with this instance name: `docker_gpdb_1
 
 .. code-block:: bash
 
-	[root@d632f535db87 data]# psql -h localhost -U gpadmin -d basic_db -c "select count(*) from basictable"
+	[root@d632f535db87 data]# psql -h localhost -U gpadmin -d basic_db -c "select count(*) from basictable" 
 	 count
 	-------
 	  9216

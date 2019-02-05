@@ -15,7 +15,8 @@ Welcome to Greenplum-Spark Connector Examples's documentation!
 	Setup GPDB and Spark <setup-greenplum-spark.rst>
 	Create database and table <create-database-table.rst>
 	Reading data from GPDB<Read-data-from-Greenplum-into-Spark.rst>
-	Writing data into GPDB <Write-data-from-Spark-into-Greenplum.rst>
+    Writing data into GPDB<Write-data-from-Spark-into-Greenplum.rst>
+	Writing data into GPDB via JDBC <Write-data-from-Spark-into-Greenplum-via-JDBC.rst>
 	Example - PySpark <using-pyspark.rst>
 	About <all-about-me>
 

@@ -2,7 +2,7 @@
  Using PySpark
 #########################################
 
-In this example, we will describe how to run PySpark-shell. 
+In this example, we will describe how to run PySpark-shell.
 
 How to read data from Greenplum into Spark
 =========================================================
@@ -11,7 +11,7 @@ How to read data from Greenplum into Spark
 
 .. code-block:: bash
 
-	$ docker exec -it docker_master_1 /bin/bash
+	$ docker exec -it sparkmaster /bin/bash
 
 2. Execute the command below to run pySpark
 
@@ -29,14 +29,19 @@ How to read data from Greenplum into Spark
 	...
 	Using Python version 3.4.2 (default, Oct  8 2014 10:45:20)
 	SparkSession available as 'spark'.
+3. Verfiy the Greenplum-Spark connector is loaded by pySpark
+  Use the command `sc.getConf().getAll()` to verify spark.repl.local.jars is referring to Greenplum-Spark connector jar.
 
-3. To load a DataFrame from a Greenplum table in PySpark
+.. code-block:: python
+    >>> sc.getConf().getAll()
+    [('spark.app.id', 'app-20180718183929-0000'), ('spark.jars', 'file:///code/usecase1/data/greenplum-spark_2.11-1.4.0.jar'), ('spark.master', 'spark://master:7077'), ('spark.rdd.compress', 'True'), ('spark.driver.host', 'master'), ('spark.serializer.objectStreamReset', '100'), ('spark.repl.local.jars', 'file:///code/usecase1/data/greenplum-spark_2.11-1.4.0.jar'), ('spark.driver.port', '38611'), ('spark.executor.id', 'driver'), ('spark.submit.deployMode', 'client'), ('spark.app.name', 'PySparkShell'), ('spark.ui.showConsoleProgress', 'true')]
+
+4. To load a DataFrame from a Greenplum table in PySpark
 
 .. code-block:: python
 
 	>>>source_df = sqlContext.read.format('io.pivotal.greenplum.spark.GreenplumRelationProvider').options(
 	          url='jdbc:postgresql://docker_gpdb_1/basic_db',
-	          driver='com.mysql.jdbc.Driver',
 	          dbtable='basictable',
 	          user='gpadmin',
 	          password='pivotal',
@@ -45,7 +50,7 @@ How to read data from Greenplum into Spark
 
 
 
-4. Verify source dataframe by running these commands
+5. Verify source dataframe by running these commands
 
 .. code-block:: python
 
@@ -87,11 +92,11 @@ How to write data from Spark DataFrame into Greenplum
 =========================================================
 In this section, you can write data from Spark DataFrame into Greenplum table.
 
-1. Determine the number of records in the "basictable" table by using psql command.  
+1. Determine the number of records in the "basictable" table by using psql command.
 
 .. code-block:: python
 
-	$ docker exec -it docker_gpdb_1 /bin/bash
+	$ docker exec -it gpdbsne /bin/bash
 	[root@d632f535db87 data]# psql -h localhost -U gpadmin -d basic_db -c "select count(*) from basictable"
 
 2. Configure JDBC URL and connection Properties and use DataFrame write operation to write data from Spark into Greenplum.
@@ -100,7 +105,7 @@ In this section, you can write data from Spark DataFrame into Greenplum table.
 .. code-block:: python
 
 	source_df.write.format('jdbc').options(
-	    url='jdbc:postgresql://docker_gpdb_1/basic_db',
+	    url='jdbc:postgresql://gpdbsne/basic_db',
 	    dbtable='basictable',
 	    user='gpadmin',
 	    password='pivotal',
@@ -112,7 +117,7 @@ In this section, you can write data from Spark DataFrame into Greenplum table.
 
 .. code-block:: bash
 
-	$ docker exec -it docker_gpdb_1 /bin/bash
+	$ docker exec -it gpdbsne /bin/bash
 	[root@d632f535db87 data]# psql -h localhost -U gpadmin -d basic_db -c "select count(*) from basictable"
 	 count
 	-------

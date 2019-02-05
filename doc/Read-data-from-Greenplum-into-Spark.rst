@@ -57,7 +57,7 @@ You can follow the example below to verify the JDBC driver. The scala repl confi
 	// that gives an one-partition Dataset
 	val dataFrame = spark.read.format("io.pivotal.greenplum.spark.GreenplumRelationProvider")
 	.option("dbtable", "basictable")
-	.option("url", "jdbc:postgresql://docker_gpdb_1/basic_db")
+	.option("url", "jdbc:postgresql://gpdbsne/basic_db")
 	.option("user", "gpadmin")
 	.option("password", "pivotal")
 	.option("driver", "org.postgresql.Driver")

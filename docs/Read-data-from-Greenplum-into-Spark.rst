@@ -4,13 +4,13 @@
 
 In this example, we will describe how to configure Greenplum-Spark connector when you run Spark-shell. It assumes the database and table are already created.
 
-1. Make sure you download greenplum-spark_2.11.x.x.jar (latest) from `Pivotal Network <https://network.pivotal.io/products/pivotal-gpdb/#/releases/280281/file_groups/702>`_. 
+1. Make sure you download greenplum-spark_2.11-x.x.jar from `Pivotal Network <https://network.pivotal.io/api/v2/products/pivotal-gpdb/releases/7106/product_files/30352/download/>`_. 
 
 2. Connect to the Spark master instance.
 
 .. code-block:: java
 
-	$ docker exec -it gpdbsne /bin/bash
+	$ docker exec -it sparkmaster /bin/bash
 
 3. Run the command to start a spark shell that loads Greenplum-Spark connector. This section assumes you have downloaded greenplum-spark_2.11.jar under the github repo with subfolder `scripts`.  The root directory is mounted by the docker images under /code directory.  You can also use scripts such as `scripts/download_postgresql.sh` and `scripts/download_greenplum-spark-connector.sh` to download required binaries.
 
@@ -57,7 +57,7 @@ You can follow the example below to verify the JDBC driver. The scala repl confi
 	// that gives an one-partition Dataset
 	val dataFrame = spark.read.format("io.pivotal.greenplum.spark.GreenplumRelationProvider")
 	.option("dbtable", "basictable")
-	.option("url", "jdbc:postgresql://docker_gpdb_1/basic_db")
+	.option("url", "jdbc:postgresql://gpdbsne/basic_db")
 	.option("user", "gpadmin")
 	.option("password", "pivotal")
 	.option("driver", "org.postgresql.Driver")

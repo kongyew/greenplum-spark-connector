@@ -11,7 +11,7 @@ How to read data from Greenplum into Spark
 
 .. code-block:: bash
 
-	$ docker exec -it usecase1_master_1 /bin/bash
+	$ docker exec -it sparkmaster /bin/bash
 
 2. Execute the command below to run pySpark
 

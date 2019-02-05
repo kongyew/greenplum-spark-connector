@@ -1,8 +1,8 @@
-#########################################
- Writing data from Spark into Greenplum
-#########################################
+################################################
+ Writing data from Spark into Greenplum via JDBC
+################################################
 
-In this section, you can write data from Spark DataFrame into Greenplum table by using Greenplum-Spark connector.  
+In this section, you can write data from Spark DataFrame into Greenplum table by using JDBC driver.  
 
 1. Run the script under scripts/download_postgresql.sh to download postgresql jar to the directory 'scripts'.
 

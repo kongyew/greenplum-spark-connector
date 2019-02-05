@@ -96,7 +96,7 @@ In this section, you can write data from Spark DataFrame into Greenplum table.
 
 .. code-block:: python
 
-	$ docker exec -it docker_gpdb_1 /bin/bash
+	$ docker exec -it gpdbsne /bin/bash
 	[root@d632f535db87 data]# psql -h localhost -U gpadmin -d basic_db -c "select count(*) from basictable"
 
 2. Configure JDBC URL and connection Properties and use DataFrame write operation to write data from Spark into Greenplum.
@@ -105,7 +105,7 @@ In this section, you can write data from Spark DataFrame into Greenplum table.
 .. code-block:: python
 
 	source_df.write.format('jdbc').options(
-	    url='jdbc:postgresql://docker_gpdb_1/basic_db',
+	    url='jdbc:postgresql://gpdbsne/basic_db',
 	    dbtable='basictable',
 	    user='gpadmin',
 	    password='pivotal',
@@ -117,7 +117,7 @@ In this section, you can write data from Spark DataFrame into Greenplum table.
 
 .. code-block:: bash
 
-	$ docker exec -it docker_gpdb_1 /bin/bash
+	$ docker exec -it gpdbsne /bin/bash
 	[root@d632f535db87 data]# psql -h localhost -U gpadmin -d basic_db -c "select count(*) from basictable"
 	 count
 	-------

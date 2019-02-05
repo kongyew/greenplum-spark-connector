@@ -46,7 +46,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Greenplum-Spark Connector Examples'
-copyright = u'2017, kong-yew,chan'
+copyright = u'2019, kong-yew,chan'
 author = u'kong-yew,chan'
 
 # The version info for the project you're documenting, acts as replacement for

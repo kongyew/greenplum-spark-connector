@@ -12,7 +12,6 @@ Pre-requisites:
 
 
 
-
 Run the docker instances:
 =======================================
 
@@ -20,7 +19,7 @@ You can run spark and GPDB instances by using existing scripts.
 
 .. code-block:: bash
 
-	  $./runGPDBSpark2-1.sh
+	  $./runDocker.sh -t usecase1 -c up
 
 Verify the docker instance is running:
 =======================================

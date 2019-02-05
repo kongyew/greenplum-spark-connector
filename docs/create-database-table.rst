@@ -39,11 +39,11 @@ How to run the setupDB:
 This setupDB.sh script automatically creates default database and table(s). The script is located under `<src>/data/scripts/setupDB.sh`.
 
 1. Connect to the GPDB docker image
-The Greenplum DB cluster will be running with this instance name: `docker_gpdb_1` with two segments. To access this docker instance, exec into a container:
+The Greenplum DB cluster will be running with this instance name: `gpdbsne` with two segments. To access this docker instance, exec into a container:
 
 .. code-block:: bash
 
-	$ docker exec -it docker_gpdb_1 bin/bash
+	$ docker exec -it gpdbsne bin/bash
  
 
 2. Execute the command below to access the scripts folder under "/code/data"

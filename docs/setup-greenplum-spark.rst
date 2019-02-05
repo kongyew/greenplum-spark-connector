@@ -7,7 +7,7 @@ This page describes how to setup Greenpum and Spark dockers
 Pre-requisites:
 =================================================================
 - `docker compose <http://docs.docker.com/compose>`_
-- `Greenplum Spark connector <http://greenplum-spark.docs.pivotal.io/100/index.html>`_
+- `Greenplum Spark connector <http://greenplum-spark.docs.pivotal.io/latest/index.html>`_
 - `Postgres JDBC driver <https://jdbc.postgresql.org/download/postgresql-42.1.4.jar>`_ - if you want to write data from Spark into Greenplum.
 
 
@@ -19,15 +19,15 @@ It builds a docker image with Pivotal Greenplum binaries and download some exist
 .. code-block:: bash
 
     $ ./runDocker.sh -t usecase1 -c up
-Creating network "docker_default" with the default driver
-Creating docker_master_1 ... done
-Creating docker_worker_1 ... done
-Creating gpdbsne         ... done
-Attaching to docker_master_1, docker_worker_1, gpdbsne
+Creating network "usecase1_default" with the default driver
+Creating sparkmaster ... done
+Creating gpdbsne     ... done
+Creating sparkworker ... done
+...
 ...
 
 
-The SparkUI will be running at `http://localhost:8080` with one worker listed.
+The SparkUI will be running at `http://localhost:8081` with one worker listed.
 
 
 Setup Greenplum with sample tables
@@ -41,7 +41,7 @@ Connect to Spark master instance
 
 .. code-block:: bash
 
-  $ docker exec -it docker_master_1 /bin/bash
+  $ docker exec -it sparkmaster /bin/bash
 
 Connect to Greenplum instance
 =================================================================
@@ -50,4 +50,5 @@ Connect to Greenplum instance
 
 .. code-block:: bash
 
-  $ docker exec -it docker_gpdb_1 /bin/bash
+  $ docker exec -it gpdbsne bin/bash
+    root@master:/usr/spark-2.1.0#

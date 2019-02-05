@@ -22,3 +22,7 @@ supports general computation graphs for data analysis. It also supports a
 rich set of higher-level tools including Spark SQL for SQL and DataFrames,
 MLlib for machine learning, GraphX for graph processing, and Spark Streaming for stream processing.
 
+
+References:
+- [Introduction](https://gitpitch.com/kongyew/greenplum-spark-connector)
+- [Greenplum-Spark connector docs](http://greenplum-spark.docs.pivotal.io/latest/index.html)

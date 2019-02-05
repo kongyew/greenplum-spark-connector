@@ -19,11 +19,11 @@ It builds a docker image with Pivotal Greenplum binaries and download some exist
 .. code-block:: bash
 
     $ ./runDocker.sh -t usecase1 -c up
-Creating network "docker_default" with the default driver
-Creating docker_master_1 ... done
-Creating docker_worker_1 ... done
-Creating gpdbsne         ... done
-Attaching to docker_master_1, docker_worker_1, gpdbsne
+Creating network "usecase1_default" with the default driver
+Creating sparkmaster ... done
+Creating gpdbsne     ... done
+Creating sparkworker ... done
+...
 ...
 
 
@@ -41,7 +41,7 @@ Connect to Spark master instance
 
 .. code-block:: bash
 
-  $ docker exec -it docker_master_1 /bin/bash
+  $ docker exec -it sparkmaster /bin/bash
 
 Connect to Greenplum instance
 =================================================================

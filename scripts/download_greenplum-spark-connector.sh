@@ -11,7 +11,7 @@ current=`pwd`
 cd `dirname $0`
 # Replace me with a valid Pivotal network token .  It is found under your profile ->PIVNET_TOKEN  (Link: https://network.pivotal.io/users/dashboard/edit-profile)
 # if you have pivnet cli , check cat ~/.pivnetrc
-export PIVNET_TOKEN=CHANGE_ME
+export PIVNET_TOKEN=H9sn5XbmcKWySySPhNxv
 
 
 # GSC 1.6.0 - sha 3ca929f1bb030bda085e56b2e3cfc912e879ad60c1b63f36815d75b5e69903ad

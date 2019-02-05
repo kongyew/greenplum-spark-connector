@@ -30,7 +30,7 @@ and Spark Streaming for stream processing.
 
 ## Pre-requisites:
 - [docker-compose](http://docs.docker.com/compose)
-- [Greenplum-Spark connector](http://greenplum-spark.docs.pivotal.io/100/index.html)
+- [Greenplum-Spark connector](http://greenplum-spark.docs.pivotal.io/latest/index.html)
 - [Postgres JDBC driver - if you want to write data from Spark into Greenplum ](https://jdbc.postgresql.org/download/postgresql-42.2.5.jar)
 
 # Using docker-compose:
@@ -38,11 +38,10 @@ To create a standalone Greenplum cluster with the following command in the githu
 It builds a docker image with Pivotal Greenplum binaries and download some existing images such as Spark master and worker. Initially, it may take some time to download the docker image.
 ```
     $ ./runDocker.sh -t usecase1 -c up
-Creating network "docker_default" with the default driver
-Creating docker_master_1 ... done
-Creating docker_worker_1 ... done
-Creating gpdbsne         ... done
-Attaching to docker_master_1, docker_worker_1, gpdbsne
+Creating network "usecase1_default" with the default driver
+Creating sparkmaster ... done
+Creating gpdbsne     ... done
+Creating sparkworker ... done
 ...
 
 ```
@@ -54,25 +53,25 @@ To access `Greenplum cluster`, exec into a container:
     root@master:/usr/spark-2.1.0#
 ```
 ## Setup Greenplum with sample tables
-Follow this [readme](usecase1/ README_DB.md)
+Follow this [readme](usecase1/README_DB.md)
 
 ##  Connect to Greenplum and Spark via Greenplum-Spark connector
 In this example, we will describe how to configure Greenplum-Spark connector when you run Spark-shell.
 
-1. Make sure you download greenplum-spark_2.11-1.5.0.jar or latest jar from Pivotal Network.
+1. Make sure you download [greenplum-spark_2.11-1.6.0.jar or latest jar](https://network.pivotal.io/products/pivotal-gpdb/#/releases/280281/file_groups/702) from Pivotal Network.
 
 2. Connect to the Spark master docker image
 ```
-$ docker exec -it usecase1_master_1 bash
+$ docker exec -it sparkmaster bash
 ```
 3. Run the command to start a spark shell that loads Greenplum-Spark connector. This section assumes you have downloaded latest greenplum-spark.jar under the github repo with subfolder `scripts`.  The root directory is mounted by the docker images under /code directory.  You can also use scripts such as `scripts/download_postgresql.sh` to download binaries.
 
 Also, we included Postgresql (optional), in order to write data from Spark into Greenplum. Greenplum-Spark connector will support write features in future release and support parallel data transfer that performs significantly better than JDBC driver.
 ```
 
-root@master:/usr/spark-2.1.0#GSC_JAR=$(ls /code/scripts/greenplum-spark_2.11-*.jar)
-root@master:/usr/spark-2.1.0#POSTGRES_JAR=$(ls /code/scripts/postgresql-*.jar)
-root@master:/usr/spark-2.1.0#spark-shell --jars "${GSC_JAR},${POSTGRES_JAR}" --driver-class-path ${POSTGRES_JAR}
+root@master:/usr/spark-2.4.0#GSC_JAR=$(ls /code/scripts/greenplum-spark_2.11-*.jar)
+root@master:/usr/spark-2.4.0#POSTGRES_JAR=$(ls /code/scripts/postgresql-*.jar)
+root@master:/usr/spark-2.4.0#spark-shell --jars "${GSC_JAR},${POSTGRES_JAR}" --driver-class-path ${POSTGRES_JAR}
 ...
 Welcome to
       ____              __

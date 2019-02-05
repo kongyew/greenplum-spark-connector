@@ -10,7 +10,7 @@ In this example, we will describe how to configure Greenplum-Spark connector whe
 
 .. code-block:: java
 
-	$ docker exec -it docker_master_1 /bin/bash
+	$ docker exec -it gpdbsne /bin/bash
 
 3. Run the command to start a spark shell that loads Greenplum-Spark connector. This section assumes you have downloaded greenplum-spark_2.11.jar under the github repo with subfolder `scripts`.  The root directory is mounted by the docker images under /code directory.  You can also use scripts such as `scripts/download_postgresql.sh` and `scripts/download_greenplum-spark-connector.sh` to download required binaries.
 

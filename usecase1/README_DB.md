@@ -9,11 +9,10 @@ Make sure the docker instances are running by running `docker ps`
 ```
   $ docker ps
 CONTAINER ID        IMAGE                                COMMAND                  CREATED             STATUS              PORTS                                                                                                                                                        NAMES
-ec08ed2c580b        gettyimages/spark:2.3.0-hadoop-2.8   "bin/spark-class org…"   40 minutes ago      Up 40 minutes       7012-7016/tcp, 8881/tcp, 0.0.0.0:8081->8081/tcp                                                                                                              usecase1_worker_1
-60813afa082d        kochanpivotal/gpdb5oss               "/docker-entrypoint.…"   40 minutes ago      Up 40 minutes       0.0.0.0:5005->5005/tcp, 0.0.0.0:5010->5010/tcp, 0.0.0.0:5432->5432/tcp, 0.0.0.0:9090->9090/tcp, 0.0.0.0:40000-40002->40000-40002/tcp, 0.0.0.0:9022->22/tcp   gpdbsne
-4a462428e320        gettyimages/spark:2.3.0-hadoop-2.8   "bin/spark-class org…"   41 minutes ago      Up 40 minutes       0.0.0.0:4040->4040/tcp, 0.0.0.0:6066->6066/tcp, 0.0.0.0:7077->7077/tcp, 0.0.0.0:8080->8080/tcp, 7001-7006/tcp                                                usecase1_master_1
+b14bf4a39041        kochanpivotal/gpdb5oss               "/docker-entrypoint.…"   8 minutes ago       Up 8 minutes        0.0.0.0:5005->5005/tcp, 0.0.0.0:5010->5010/tcp, 0.0.0.0:5432->5432/tcp, 0.0.0.0:9090->9090/tcp, 0.0.0.0:40000-40002->40000-40002/tcp, 0.0.0.0:9022->22/tcp   gpdbsne
+785d2673eb77        gettyimages/spark:2.1.1-hadoop-2.7   "bin/spark-class org…"   8 minutes ago       Up 8 minutes        7012-7016/tcp, 8881/tcp, 0.0.0.0:8081->8081/tcp                                                                                                              sparkworker
+bd5591f409d6        gettyimages/spark:latest             "bin/spark-class org…"   8 minutes ago       Up 8 minutes        0.0.0.0:4040->4040/tcp, 0.0.0.0:6066->6066/tcp, 0.0.0.0:7077->7077/tcp, 0.0.0.0:8080->8080/tcp, 7001-7006/tcp                                                sparkmaster
 ```  
-
 
 
 ##  How to run the setupDB.sh

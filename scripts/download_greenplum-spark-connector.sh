@@ -14,11 +14,11 @@ cd `dirname $0`
 export PIVNET_TOKEN=CHANGE_ME
 
 
-# GSC 1.5 - sha 4d0717602c918e348df382f379eaa69ad3d3efeebc8176c1f7023b3fa358cc84
-# Link: https://network.pivotal.io/api/v2/products/pivotal-gpdb/releases/183980/product_files/218924/download
-export LOCAL_FILE_NAME=greenplum-spark_2.11-1.5.0.jar
+# GSC 1.6.0 - sha 3ca929f1bb030bda085e56b2e3cfc912e879ad60c1b63f36815d75b5e69903ad
+# Link: https://network.pivotal.io/api/v2/products/pivotal-gpdb/releases/225597/product_files/243101/download
+export LOCAL_FILE_NAME=greenplum-spark_2.11-1.6.0.jar
 
-export DOWNLOAD_URL=https://network.pivotal.io/api/v2/products/pivotal-gpdb/releases/73874/product_files/111950/download
+export DOWNLOAD_URL=https://network.pivotal.io/api/v2/products/pivotal-gpdb/releases/225597/product_files/243101/download
 wget -O "$LOCAL_FILE_NAME" --post-data="" --header="Authorization: Token $PIVNET_TOKEN" $DOWNLOAD_URL
 
 cd $current

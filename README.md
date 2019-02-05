@@ -1,7 +1,7 @@
 [![GitPitch](https://gitpitch.com/assets/badge.svg)](https://gitpitch.com/kongyew/greenplum-spark-connector)
 
 # Getting started with Greenplum and Apache Spark in minutes
-This page provides how to get started with Greenplum and Apache Spark. You can use these examples to perform these usecases.
+This page provides how to get started with Greenplum and Apache Spark. You can use these examples to apply these use cases.
 
 # Greenplum - Spark Architecture:
 
@@ -19,11 +19,11 @@ The Pivotal Greenplum Database (GPDB) is an advanced, fully featured, open sourc
 <https://pivotal.io/pivotal-greenplum>
 
 ## Pivotal Greenplum-Spark Connector
-The [Pivotal Greenplum-Spark Connector](http://greenplum-spark.docs.pivotal.io/100/index.html) provides high speed, parallel data transfer between Greenplum Database and Apache Spark clusters to support:
+The [Pivotal Greenplum-Spark Connector](http://greenplum-spark.docs.pivotal.io/latest/index.html) provides high speed, parallel data transfer between Greenplum Database and Apache Spark clusters to support:
 
-- Interactive data analysis
-- In-memory analytics processing
-- Batch ETL
+- [Interactive data analysis](http://greenplum-spark.docs.pivotal.io/latest/overview.html)
+- [In-memory analytics processing](http://greenplum-spark.docs.pivotal.io/latest/overview.html)
+- [Batch ETL](http://greenplum-spark.docs.pivotal.io/latest/overview.html)
 
 ## Apache Spark
 Spark is a fast and general cluster computing system for Big Data. It provides

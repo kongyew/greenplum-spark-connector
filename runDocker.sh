@@ -8,6 +8,26 @@ set -e
 # Including configurations
 . config.sh
 
+
+function RunUseCase4()
+{
+  COMMAND=$1
+
+  if [[ -z "${COMMAND}" ]]; then
+    echo "Missing command"
+    exit -1;
+  else
+    if [[ "${COMMAND}" == "up" ]]; then
+        $DC_USE_CASE4_SCRIPT up
+    elif [[ "${COMMAND}" == "down" ]]; then
+         $DC_USE_CASE4_SCRIPT down
+    else # default option
+        $DC_USE_CASE4_SCRIPT up
+    fi
+  fi
+}
+
+
 function RunUseCase3()
 {
   COMMAND=$1
@@ -115,6 +135,8 @@ else
       RunUseCase2  "${COMMAND}"
   elif [[ "${TYPE}" == "usecase3" ]]; then
         RunUseCase3  "${COMMAND}"
+  elif [[ "${TYPE}" == "usecase4" ]]; then
+        RunUseCase4  "${COMMAND}"
   else # default option
        echo "Please provide a valid option"
   fi

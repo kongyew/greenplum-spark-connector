@@ -32,4 +32,4 @@ machine.  1.14.0 or newer should be fine.
 Greenplum-Spark connector
 -------------------------
 
-Please download the Greenplum-Spark connector jar from `Pivotal Network <https://network.pivotal.io/api/v2/products/pivotal-gpdb/releases/7106/product_files/30352/download/>`_.
+Please download the Greenplum-Spark connector jar from `Pivotal Network <https://network.pivotal.io/>`_.

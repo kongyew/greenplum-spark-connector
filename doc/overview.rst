@@ -9,7 +9,7 @@ The `Pivotal Greenplum Database <https://pivotal.io/pivotal-greenplum>`_   is an
 
 Pivotal Greenplum-Spark Connector
 ==================================
-The `Pivotal Greenplum Spark Connector <http://greenplum-spark.docs.pivotal.io/100/index.html>`_ provides high speed, parallel data transfer between Greenplum Database and Apache Spark clusters to support:
+The `Pivotal Greenplum Spark Connector <http://greenplum-spark.docs.pivotal.io/latest/index.html>`_ provides high speed, parallel data transfer between Greenplum Database and Apache Spark clusters to support:
 
 - Interactive data analysis
 - In-memory analytics processing

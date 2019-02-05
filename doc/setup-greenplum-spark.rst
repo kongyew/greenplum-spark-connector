@@ -7,7 +7,7 @@ This page describes how to setup Greenpum and Spark dockers
 Pre-requisites:
 =================================================================
 - `docker compose <http://docs.docker.com/compose>`_
-- `Greenplum Spark connector <http://greenplum-spark.docs.pivotal.io/100/index.html>`_
+- `Greenplum Spark connector <http://greenplum-spark.docs.pivotal.io/latest/index.html>`_
 - `Postgres JDBC driver <https://jdbc.postgresql.org/download/postgresql-42.1.4.jar>`_ - if you want to write data from Spark into Greenplum.
 
 

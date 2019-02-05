@@ -1,13 +1,16 @@
 version: "3"
 services:
-  master:
+  sparkmaster:
     #image: gettyimages/spark:2.2.1-hadoop-2.7
-    image: gettyimages/spark:2.1.1-hadoop-2.7
+    #image: gettyimages/spark:2.1.1-hadoop-2.7
+    #image gettyimages/2.4.0-hadoop-3.0
+    image: gettyimages/spark:latest
     #image: gettyimages/spark:2.3.0-hadoop-2.8
-    command: bin/spark-class org.apache.spark.deploy.master.Master -h master
-    hostname: master
+    command: bin/spark-class org.apache.spark.deploy.master.Master -h sparkmaster
+    hostname: sparkmaster
+    container_name: sparkmaster
     environment:
-      MASTER: spark://master:7077
+      MASTER: spark://sparkmaster:7077
       SPARK_CONF_DIR: /conf
       SPARK_PUBLIC_DNS: localhost
     expose:
@@ -28,12 +31,13 @@ services:
       - ./conf/master:/conf
       - ./data:/tmp/data
       - ..:/code
-  worker:
+  sparkworker:
     #image: gettyimages/spark:2.2.1-hadoop-2.7
     image: gettyimages/spark:2.1.1-hadoop-2.7
     #image: gettyimages/spark:2.3.0-hadoop-2.8
-    command: bin/spark-class org.apache.spark.deploy.worker.Worker spark://master:7077
-    hostname: worker
+    command: bin/spark-class org.apache.spark.deploy.worker.Worker spark://sparkmaster:7077
+    hostname: sparkworker
+    container_name: sparkworker
     environment:
       SPARK_CONF_DIR: /conf
       SPARK_WORKER_CORES: 2
@@ -42,7 +46,7 @@ services:
       SPARK_WORKER_WEBUI_PORT: 8081
       SPARK_PUBLIC_DNS: localhost
     links:
-      - master
+      - sparkmaster
     expose:
       - 7012
       - 7013
@@ -76,5 +80,5 @@ services:
       volumes:
        - ..:/code
       links:
-       - master
+       - sparkmaster
       tty: true
